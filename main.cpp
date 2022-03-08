@@ -55,7 +55,16 @@ int main() {
         else if (!beginFlag && opFlag && op!=')' && cin.peek() != '(')
         {
             cin >> num;                             // read the operator with the number behind it
-            numStack.push(num);                     // save the number
+            numStack.push(num);                     // push the number to stack
+
+            opFlag = false;                         // read a number, it's not operator, so opFlag turns to False
+            beginFlag = false;                      // once read a number, it's not beginning of expression anymore
+        }
+        // 5. if ever read '.', it must be a part of a decimal number like '.6' = '0.6'
+        else if (cin.peek() == '.')
+        {
+            cin >> num;                             // read '.' together with the number behind it
+            numStack.push(num);                     // push the number to stack
 
             opFlag = false;                         // read a number, it's not operator, so opFlag turns to False
             beginFlag = false;                      // once read a number, it's not beginning of expression anymore
