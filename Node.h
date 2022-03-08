@@ -8,7 +8,7 @@
 template <class T>
 struct Node {
     T info;
-    Node next;
+    Node<T>* next;
 };
 
 

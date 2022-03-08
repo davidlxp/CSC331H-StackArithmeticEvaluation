@@ -1,7 +1,7 @@
 /*********************************************************************/
 /* Programmer: Xinpeng Liu                                           */
-/* Date: March 4, 2022                                               */
-/* Purpose:  Definition of Stack class                               */
+/* Date: March 7, 2022                                               */
+/* Purpose: Definition of Stack class                                */
 /* Stack class is implemented by using LinkedList                    */
 /*********************************************************************/
 

@@ -1,6 +1,8 @@
-//
-// Created by Xinpeng Liu on 3/4/22.
-//
+/*********************************************************************/
+/* Programmer: Xinpeng Liu                                           */
+/* Date: March 7, 2022                                               */
+/* Purpose: Implementation of Stack class                            */
+/*********************************************************************/
 
 #include "Stack.h"
 
@@ -68,10 +70,7 @@ void Stack<T>::pop()
      * 2. Stack has item
      */
 
-    if (isEmpty())                           // if Stack is empty, don't pop anything
-        cout << "Stack is empty, "
-                "nothing to pop." << endl;
-    else
+    if(!isEmpty())                          // if Stack is empty, don't pop anything
     {
         Node<T>* temp = top;                // let "temp" pointer points to where top points to
         top = top->next;                    // move "top" to the next, it could be a node or nullptr
@@ -85,7 +84,8 @@ void Stack<T>::pop()
 template <class T>
 void Stack<T>::Top(T& container) const
 {
-    container = top->info;
+    if(!isEmpty())                          // if the Stack is empty, return nothing
+        container = top->info;
 }
 
 template <class T>
@@ -101,6 +101,41 @@ void Stack<T>::destroy()
         delete temp;
     }
     temp = nullptr;
+}
+
+template <class T>
+void Stack<T>::copy(const Stack<T> & other)
+{
+    /**
+     * @CasesToConsider
+     * 1. Other Stack is empty
+     * 2. Other Stack has item
+     */
+
+    if (other.top == nullptr)                   // when the other Stack is empty
+        top == nullptr;
+    else                                        // when the other Stack is not empty
+    {
+        top = new Node<T>;                      // these 3 lines copy the first node
+        top->next = nullptr;
+        top->info = other.top->info;
+
+        Node<T>* p = other.top->next;           // p will walk the other Stack
+        Node<T>* q = top;                       // q will walk, create node and copy info to this Stack
+
+        while (p != nullptr)                    // only if p is not NULL, q take action
+        {
+            q->next = new Node<T>;              // q create a new node
+            q->next->next = nullptr;            // set "next" of new node to NULL for safety
+            q->next->info = p->info;            // copy info to the new node
+
+            q = q->next;                        // q and p both walks to the next location
+            p = p->next;
+        }
+
+        p = nullptr;                            // for safety, set both p and q to NULL after use
+        q = nullptr;
+    }
 }
 
 
