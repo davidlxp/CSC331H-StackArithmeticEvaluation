@@ -50,36 +50,30 @@ int main() {
             opFlag = false;                         // read a number, it's not operator, so opFlag turns to False
             beginFlag = false;                      // once read something, it's not beginning of expression anymore
         }
-        // 3. when see '-' or '+' operator
-        //    --> and if it's the beginning, or it's in the middle but right after an operator,
-        //    which is not ')', we turn the form like '3+ -  2' into '3+ (-1) * 2'.
-        //    --> if the scenarios stated above are not satisfied, read as an ordinary '+' or '-'
-        else if (cin.peek() == '-' || cin.peek() == '+')
+        // 3. when seeing '-' or '+' operator when they don't stand for Arithmetic operators
+        // --> if '-' or '+' appears at the beginning of the arithmetic expression,
+        //     they should stand for negativity or positivity of number. In this case,
+        //     we turn the form like '+-3 + 4' into '(+1) * (-1) * 3 + 4'
+        // --> if '-' or '+' discovered in the middle of expression, but right after another operator,
+        //     which is not ')'. They also stand for negativity or positivity of number. In this case,
+        //     we turn the form like '3+ -  2' into '3+ (-1) * 2'.
+        else if ((cin.peek() == '-' || cin.peek() == '+') && (beginFlag || (opFlag && op != ')')))
         {
-            if (beginFlag || (opFlag && op != ')')) // when '+' and '-' indicate a number's negativity
-            {
-                cin >> op;                          // read the operator '-' or '+'
+            cin >> op;                          // read the operator '-' or '+'
 
-                if (op == '-')                      // operator '-' means '-1 *'
-                    numStack.push(-1);         // add number '-1' to number stack
-                else                                // operator '+' means '1 *'
-                    numStack.push(1);         // add number '1' to number stack
+            if (op == '-')                      // operator '-' means '-1 *'
+                numStack.push(-1);         // add number '-1' to number stack
+            else                                // operator '+' means '1 *'
+                numStack.push(1);         // add number '1' to number stack
 
-                opStack.push('*');             // add operator '*' to stack
+            opStack.push('*');             // add operator '*' to stack
 
-                opFlag = true;                      // the last read is an operator '*', so opFlag turns to True
-                beginFlag = false;                  // once read something, it's not beginning of expression anymore
-            }
-            else                                    // when '-' or '+' play role as normal arithmetic operator
-            {
-                cin >> op;
-                opStack.push(op);
-                opFlag = true;                      // read an operator, turns opFlag to True
-                beginFlag = false;                  // once read something, it's not beginning of expression anymore
-            }
+            opFlag = true;                      // the last read is an operator '*', so opFlag turns to True
+            beginFlag = false;                  // once read something, it's not beginning of expression anymore
+
         }
         // 4. if ever read '.', it must be a part of a decimal number like '.6' = '0.6'
-        //    we change the form like '.5' to '0.1 * 5'
+        //    we change the form like '.6' to '0.1 * 6'
         else if (cin.peek() == '.')
         {
             cin >> op;                              // read the decimal so the input stream can move on
@@ -91,7 +85,7 @@ int main() {
             beginFlag = false;                      // once read something, it's not beginning of expression anymore
         }
         // 5. if meet operators under the other situation which are not stated above
-        //    read they are normal operators
+        //    read them as normal arithmetic operators
         else
         {
             cin >> op;
@@ -125,13 +119,13 @@ int getPrecedence(char& op, vector<char>& opPrecedence)
     return res;
 }
 
-//template <class T>
-//bool isLessPrecedence(char& leftOp, char& rightOp, vector<char>& opPrecedence)
-//{
-//    bool res = false;
-//
-//
-//}
+template <class T>
+bool isLessPrecedence(char& leftOp, char& rightOp, vector<char>& opPrecedence)
+{
+    int leftPrecedence = getPrecedence(leftOp, opPrecedence);
+    int rightPrecedence = getPrecedence(rightOp, opPrecedence);
+    return leftOp < rightOp;
+}
 
 template <class T>
 void printStack(Stack<T>& stack)
