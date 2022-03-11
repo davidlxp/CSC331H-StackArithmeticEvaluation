@@ -92,6 +92,11 @@ public:
      */
     void Top(T&) const;
 
+    /**
+    * @Brief pop all items from a Stack and print all of them
+    */
+    void printStack();
+
 };
 
 

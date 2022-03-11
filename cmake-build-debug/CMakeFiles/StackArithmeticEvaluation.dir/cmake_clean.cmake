@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/StackArithmeticEvaluation.dir/ArithmeticEvaluation.cpp.o"
   "CMakeFiles/StackArithmeticEvaluation.dir/Stack.cpp.o"
   "CMakeFiles/StackArithmeticEvaluation.dir/main.cpp.o"
   "StackArithmeticEvaluation"

@@ -138,4 +138,16 @@ void Stack<T>::copy(const Stack<T> & other)
     }
 }
 
+template <class T>
+void Stack<T>::printStack()
+{
+    while (!isEmpty())                           // while the stack is not empty
+    {
+        T temp;
+        Top(temp);                            // save the value of top item of stack to a variable
+        pop();                                   // remove the top item from stack
+        cout << temp << endl;                    // print the value of top item
+    }
+    cout << endl;
+}
 

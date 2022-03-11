@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.cpp">
+			<Option target="StackArithmeticEvaluation"/>
+		</Unit>
+		<Unit filename="/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.h">
+			<Option target="StackArithmeticEvaluation"/>
+		</Unit>
 		<Unit filename="/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/Node.h">
 			<Option target="StackArithmeticEvaluation"/>
 		</Unit>

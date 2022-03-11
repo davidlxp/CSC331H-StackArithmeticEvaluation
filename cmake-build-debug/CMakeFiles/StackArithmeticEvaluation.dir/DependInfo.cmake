@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.cpp" "/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/cmake-build-debug/CMakeFiles/StackArithmeticEvaluation.dir/ArithmeticEvaluation.cpp.o"
   "/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/Stack.cpp" "/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/cmake-build-debug/CMakeFiles/StackArithmeticEvaluation.dir/Stack.cpp.o"
   "/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/main.cpp" "/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/cmake-build-debug/CMakeFiles/StackArithmeticEvaluation.dir/main.cpp.o"
   )

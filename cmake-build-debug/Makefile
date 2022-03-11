@@ -129,6 +129,30 @@ StackArithmeticEvaluation/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/StackArithmeticEvaluation.dir/build.make CMakeFiles/StackArithmeticEvaluation.dir/build
 .PHONY : StackArithmeticEvaluation/fast
 
+ArithmeticEvaluation.o: ArithmeticEvaluation.cpp.o
+.PHONY : ArithmeticEvaluation.o
+
+# target to build an object file
+ArithmeticEvaluation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/StackArithmeticEvaluation.dir/build.make CMakeFiles/StackArithmeticEvaluation.dir/ArithmeticEvaluation.cpp.o
+.PHONY : ArithmeticEvaluation.cpp.o
+
+ArithmeticEvaluation.i: ArithmeticEvaluation.cpp.i
+.PHONY : ArithmeticEvaluation.i
+
+# target to preprocess a source file
+ArithmeticEvaluation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/StackArithmeticEvaluation.dir/build.make CMakeFiles/StackArithmeticEvaluation.dir/ArithmeticEvaluation.cpp.i
+.PHONY : ArithmeticEvaluation.cpp.i
+
+ArithmeticEvaluation.s: ArithmeticEvaluation.cpp.s
+.PHONY : ArithmeticEvaluation.s
+
+# target to generate assembly for a file
+ArithmeticEvaluation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/StackArithmeticEvaluation.dir/build.make CMakeFiles/StackArithmeticEvaluation.dir/ArithmeticEvaluation.cpp.s
+.PHONY : ArithmeticEvaluation.cpp.s
+
 Stack.o: Stack.cpp.o
 .PHONY : Stack.o
 
@@ -186,6 +210,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... StackArithmeticEvaluation"
+	@echo "... ArithmeticEvaluation.o"
+	@echo "... ArithmeticEvaluation.i"
+	@echo "... ArithmeticEvaluation.s"
 	@echo "... Stack.o"
 	@echo "... Stack.i"
 	@echo "... Stack.s"
