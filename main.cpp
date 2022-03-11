@@ -1,6 +1,5 @@
 
 # include <iostream>
-# include <vector>
 #include <unordered_map>
 # include "Stack.cpp"
 
@@ -17,11 +16,11 @@ void arithmeticEvaluation();
 /**
  * @Brief getPrecedence returns the precedence of an operator (eg. '+')
  * @Input 'op' is the operator the user wants to check precedence for.
- * 'opPrecedence' a vector of operators with user defined precedence.
- * operator which listed on the more rear part of the vector has higher precedence.
+ * 'precedenceMap' a hashmap of operators with their corresponding precedence.
+ * The larger number of precedence means the operator has higher precedence
  * @Output the precedence rank of an operator
  */
-int getPrecedence(char, unordered_map<char, int>&);
+int getPrecedence(char op, unordered_map<char, int>& precedenceMap);
 
 /**
  * @Brief compare the precedence of two 'char' variables, to see if the var on the
@@ -32,7 +31,7 @@ int getPrecedence(char, unordered_map<char, int>&);
  * @Output a boolean result. If RHS has less precedence than the RHS, the output is
  * TRUE. Otherwise, the output is FALSE
  */
-bool isLessPrecedence(char, char, unordered_map<char, int>&);
+bool isLessPrecedence(char leftOp, char rightOp, unordered_map<char, int>& precedenceMap);
 
 /**
  * @Brief do calculation using the top operator in the stack, and the top two
@@ -43,13 +42,13 @@ bool isLessPrecedence(char, char, unordered_map<char, int>&);
  * @Input 1st char stack is opStack which saves the operators. 2nd double stack is
  * the numStack which saves the double numbers
  */
-void calculation(Stack<char>&, Stack<double>&);
+void calculation(Stack<char>& opStack, Stack<double>& numStack);
 
 /**
 * @Brief printStack pop all items from a Stack and print all of them
 */
 template <class T>
-void printStack(Stack<T>&);
+void printStack(Stack<T>& stack);
 
 
 int main() {
