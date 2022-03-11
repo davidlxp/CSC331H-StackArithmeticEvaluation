@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     ArithmeticEvaluation evaluator;
-    double num = evaluator.arithmeticEvaluation();
+    double num = evaluator.evaluation();
     cout << "Answer: " + to_string(num) << endl;
 
     return 0;

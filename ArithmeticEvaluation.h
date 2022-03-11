@@ -49,7 +49,7 @@ public:
      * @Input 'op' is the operator the user wants to check precedence for.
      * @Output the precedence rank of an operator
      */
-    int getPrecedence(char op);
+    int getPrecedence(char op1);
 
     /**
      * @Brief compare the precedence of two 'char' variables, to see if the var on the
@@ -75,7 +75,7 @@ public:
      * provide an arithmetic expression. Then the function will print out the
      * arithmetic calculation of the expression user provided
      */
-    double arithmeticEvaluation();
+    double evaluation();
 
 };
 

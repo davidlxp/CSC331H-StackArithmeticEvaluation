@@ -23,13 +23,13 @@ ArithmeticEvaluation::ArithmeticEvaluation()
     precedenceMap.insert(pair<char,int>('/', 4));
 }
 
-int ArithmeticEvaluation::getPrecedence(char op)
+int ArithmeticEvaluation::getPrecedence(char op1)
 {
     int res = -1;
 
     // if the key exists in map, get the value (precedence rank) from the map
-    if(precedenceMap.find(op) != precedenceMap.end())
-        res = precedenceMap.at(op);
+    if(precedenceMap.find(op1) != precedenceMap.end())
+        res = precedenceMap.at(op1);
 
     return res;
 }
@@ -43,8 +43,8 @@ bool ArithmeticEvaluation::isLessPrecedence(char leftOp, char rightOp)
 
 void ArithmeticEvaluation::calculation()
 {
-    char op;                   // create a char variable to store the operator
-    opStack.Top(op);        // get the value of top operator from opStack
+    char op1;                  // create a char variable to store the operator
+    opStack.Top(op1);       // get the value of top operator from opStack
     opStack.pop();             // remove the top operator from stack
 
     double rhs, lhs;           // for example, in "x + y", y is rhs, and x is lhs
@@ -55,7 +55,7 @@ void ArithmeticEvaluation::calculation()
 
     double calcResult;         // variable to store calculation result of lhs and rhs
 
-    switch (op)                // do calculation according to different operators
+    switch (op1)                // do calculation according to different operators
     {
         case '+':
             calcResult = lhs + rhs;
@@ -74,7 +74,7 @@ void ArithmeticEvaluation::calculation()
     numStack.push(calcResult); // push the calculated result back to the numStack
 }
 
-double ArithmeticEvaluation::arithmeticEvaluation()
+double ArithmeticEvaluation::evaluation()
 {
     cout << "Please Provide Arithmetic Expression for Evaluation: ";
     while (cin.peek() != '\n')
