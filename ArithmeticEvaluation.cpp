@@ -69,6 +69,9 @@ void ArithmeticEvaluation::calculation()
         case '/':
             calcResult = lhs / rhs;
             break;
+        default:
+            calcResult = -1;
+            break;
     }
 
     numStack.push(calcResult); // push the calculated result back to the numStack
@@ -191,5 +194,4 @@ double ArithmeticEvaluation::evaluation()
 
     return answer;
 }
-
 
