@@ -11,10 +11,10 @@ using namespace std;
 
 int main()
 {
-    ArithmeticEvaluation evaluator;
-    double num = evaluator.evaluation();
+    ArithmeticEvaluation evaluator;          // instantiate ArithmeticEvaluation class
+    double num = evaluator.evaluation();     // start to evaluate an expression and save to variable num
 
-    cout << "Answer: " << num << endl;
+    cout << "Answer: " << num << endl;       // print the calculated result
 
     return 0;
 }
