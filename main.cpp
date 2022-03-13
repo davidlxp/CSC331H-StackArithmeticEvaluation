@@ -1,3 +1,8 @@
+/*********************************************************************/
+/* Programmer: Xinpeng Liu                                           */
+/* Date: March 13, 2022                                              */
+/* Purpose: Section for testing the ArithmeticEvaluation program     */
+/*********************************************************************/
 
 # include <iostream>
 # include "ArithmeticEvaluation.h"
@@ -8,8 +13,10 @@ int main()
 {
     ArithmeticEvaluation evaluator;
     double num = evaluator.evaluation();
-    cout << "Answer: " + to_string(num) << endl;
+
+    cout << "Answer: " << num << endl;
 
     return 0;
 }
+
 
