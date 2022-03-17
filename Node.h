@@ -1,6 +1,8 @@
-//
-// Created by Xinpeng Liu on 3/4/22.
-//
+/*********************************************************************/
+/* Programmer: Xinpeng Liu                                           */
+/* Date: March 7, 2022                                               */
+/* Purpose: Definition of Node Struct                                */
+/*********************************************************************/
 
 #ifndef STACKARITHMETICEVALUATION_NODE_H
 #define STACKARITHMETICEVALUATION_NODE_H

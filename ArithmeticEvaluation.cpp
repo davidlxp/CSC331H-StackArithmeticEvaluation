@@ -28,7 +28,7 @@ int ArithmeticEvaluation::getPrecedence(char op1)
     int res = -1;
 
     // if the key exists in map, get the value (precedence rank) from the map
-    if(precedenceMap.find(op1) != precedenceMap.end())
+    if (precedenceMap.find(op1) != precedenceMap.end())
         res = precedenceMap.at(op1);
 
     return res;
@@ -87,7 +87,7 @@ double ArithmeticEvaluation::evaluation()
         {
             cin.ignore();
         }
-            // 2. if meet a number
+        // 2. if meet a number
         else if (isdigit(cin.peek()))
         {
             cin >> num;
@@ -96,14 +96,14 @@ double ArithmeticEvaluation::evaluation()
             opFlag = false;                      // read a number, it's not operator, so opFlag turns to False
             beginFlag = false;                   // once read something, it's not beginning of expression anymore
         }
-            // 3. when seeing '-' or '+' operator when they don't stand for Arithmetic operators
-            // --> if '-' or '+' appears at the beginning of the arithmetic expression,
-            //     they should stand for negativity or positivity of number. In this case,
-            //     we turn the form like '+-3 + 4' into '(+1) * (-1) * 3 + 4'
-            // --> if '-' or '+' discovered in the middle of expression, but right after another operator,
-            //     which is not ')'. They also stand for negativity or positivity of number. In this case,
-            //     we turn the form like '3+ -  2' into '3+ (-1) * 2'.
-            // --> in this step we put '1' or '-1' into numStack, and '*' into opStack
+        // 3. when seeing '-' or '+' operator when they don't stand for Arithmetic operators
+        // --> if '-' or '+' appears at the beginning of the arithmetic expression,
+        //     they should stand for negativity or positivity of number. In this case,
+        //     we turn the form like '+-3 + 4' into '(+1) * (-1) * 3 + 4'
+        // --> if '-' or '+' discovered in the middle of expression, but right after another operator,
+        //     which is not ')'. They also stand for negativity or positivity of number. In this case,
+        //     we turn the form like '3+ -  2' into '3+ (-1) * 2'.
+        // --> in this step we put '1' or '-1' into numStack, and '*' into opStack
         else if ((cin.peek() == '-' || cin.peek() == '+') && (beginFlag || (opFlag && op != ')')))
         {
             cin >> op;                          // read the operator '-' or '+'
@@ -119,8 +119,8 @@ double ArithmeticEvaluation::evaluation()
             beginFlag = false;                  // once read something, it's not beginning of expression anymore
 
         }
-            // 4. if ever read '.', it must be a part of a decimal number like '.6' = '0.6'
-            //    we change the form like '.6' to '0.1 * 6'
+        // 4. if ever read '.', it must be a part of a decimal number like '.6' = '0.6'
+        //    we change the form like '.6' to '0.1 * 6'
         else if (cin.peek() == '.')
         {
             cin >> op;                              // read the decimal so the input stream can move on
@@ -131,8 +131,8 @@ double ArithmeticEvaluation::evaluation()
             opFlag = true;                          // the last read is an operator '*', so opFlag turns to True
             beginFlag = false;                      // once read something, it's not beginning of expression anymore
         }
-            // 5. if meet operators under the other situation which are not stated above
-            //    read them as normal arithmetic operators
+        // 5. if meet operators under the other situation which are not stated above
+        //    read them as normal arithmetic operators
         else
         {
             cin >> op;                              // read the new operator
