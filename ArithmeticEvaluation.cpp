@@ -1,6 +1,6 @@
 /*********************************************************************/
 /* Programmer: Xinpeng Liu                                           */
-/* Date: March 7, 2022                                               */
+/* Date: March 17, 2022                                               */
 /* Purpose: Implementation of ArithmeticEvaluation class             */
 /*********************************************************************/
 
@@ -80,6 +80,7 @@ void ArithmeticEvaluation::calculation()
 double ArithmeticEvaluation::evaluation()
 {
     cout << "Please Provide Arithmetic Expression for Evaluation: ";
+
     while (cin.peek() != '\n')
     {
         // 1. skip the whitespace if any
