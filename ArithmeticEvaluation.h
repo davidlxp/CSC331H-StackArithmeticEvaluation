@@ -15,15 +15,25 @@
 using namespace std;
 
 class ArithmeticEvaluation {
+public:
+    /**
+     * @Brief the default constructor
+     * @Detail the function will set all the precedence for operators in precedenceMap.
+     */
+    ArithmeticEvaluation();
+
+    /**
+     * @Brief function for evaluating an arithmetic expression and provide
+     * calculated result
+     * @Detail when the function start to run, it will ask the user to
+     * provide an arithmetic expression. Then the function will print out the
+     * arithmetic calculation of the expression user provided
+     */
+    double evaluation();
+
 private:
     Stack<double> numStack;                         // Stack to store numbers
     Stack<char> opStack;                            // Stack to store operators
-
-    double num;                                     // temp variable for storing number
-    char op;                                        // temp variable for storing operator
-
-    bool opFlag;                                    // flag shows the item read previously is an operator
-    bool beginFlag;                                 // flag shows it's the beginning of reading
 
     /**
      * @Brief a hashmap of operators. Key is the operator, and value is
@@ -31,16 +41,6 @@ private:
      * rank means the operator has higher precedence
      */
     unordered_map<char, int> precedenceMap;
-
-public:
-
-    /**
-     * @Brief the default constructor
-     * @Detail the function will initialize all the member variables
-     * and set "opFlag = false" and "beginFlag = True". It will also
-     * set all the precedence for operators in precedenceMap.
-     */
-    ArithmeticEvaluation();
 
     /**
      * @Brief getPrecedence returns the precedence of an operator (eg. '+')
@@ -58,7 +58,7 @@ public:
      * @Output a boolean result. If RHS has less precedence than the RHS, the output is
      * TRUE. Otherwise, the output is FALSE
      */
-    bool isLessPrecedence(char leftOp, char rightOp);
+    bool isLessOrEqualPrecedence(char leftOp, char rightOp);
 
     /**
      * @Brief do calculation using the top operator in the stack, and the top two
@@ -70,12 +70,81 @@ public:
     void calculation();
 
     /**
-     * @Brief function for evaluating an arithmetic expression
-     * @Detail when the function start to run, it will ask the user to
-     * provide an arithmetic expression. Then the function will print out the
-     * arithmetic calculation of the expression user provided
+     * @Brief function handle the situation where peek a white space
+     * @Detail ignore the whitespace
      */
-    double evaluation();
+    void handleWhiteSpace();
+
+    /**
+     * @Brief function handle the situation where peek a number (int or decimal)
+     * @Detail add the number to numStack
+     */
+    void handleNumber(const double& num);
+
+    /**
+     * @Brief function handle the case where "-" and "+" do not stands
+     * for subtraction or addition. On contrary, they stands for negativity
+     * and positivity of a number
+     * @Detail
+     * --> if '-' or '+' appears at the beginning of the arithmetic expression,
+     * they should stand for negativity or positivity of number. In this case,
+     * we turn the form like '+-3 + 4' into '(+1) * (-1) * 3 + 4'
+     * --> if '-' or '+' discovered in the middle of expression, but right after another operator,
+     * which is not ')'. They also stand for negativity or positivity of number. In this case,
+     * we turn the form like '3+ -  2' into '3+ (-1) * 2'.
+     * --> in this step we put '1' or '-1' into numStack, and '*' into opStack
+     */
+    void handleSpecialMinusPlusSign(const char& op);
+
+    /**
+     * @Brief function handles the case where seeing a "." symbol
+     * @Detail if ever read '.', it must be a part of a decimal number like '.6' = '0.6'
+     * we change the form like '.6' to '0.1 * 6'
+     */
+    void handleDecimalSymbol(const char& op);
+
+    /**
+     * @Brief function handles the case where seeing a "(" symbol or any symbol when
+     * opStack is empty
+     * @Detail function will just push the new operator into the opStack
+     */
+    void handleOpenParenOrOpStackEmpty(const char& op);
+
+    /**
+     * @Brief function handles the case where seeing a ")" symbol
+     * @Detail function will do calculation to remove operators from
+     * opStack until see an "(". The "(" will be pop from the stack
+     * which indicates all the calculation within "()" is done
+     */
+    void handleCloseParen();
+
+    /**
+     * @Brief function handles the case where seeing a `+`, `-`,
+     * `*`, `/` operator
+     * @Detail function will compare new operator's precedence to the
+     * top operator in opStack. If new operator has less or equal
+     * precedence to the top operator, we will use the top operator from
+     * stack to do calculation, and pop it. The process will finish when
+     * new operator no longer has less or equal precedence than the top
+     * operator in the stack, or the top operator is '('. When all
+     * calculation is finished, push the new operator into the opStack
+     */
+    void handleMathOperator(const char& op);
+
+    /**
+     * @Brief function used all the remaining operators in the opStack to
+     * do calculation until empty the opStack
+     * @Detail after reading all the user input, if there still are unused operators
+     * in the opStack, which means there still are some calculations needed to be done
+     */
+    void calculateUntilEmpty();
+
+    /**
+     * @Brief function returns calculation answer of user's input
+     * @Detail after doing calculation until the opStack is empty. The only 1 number
+     * remains in the numStack is the final calculation result of user input
+     */
+    double getAnswer();
 
 };
 

@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.cpp
+ArithmeticEvaluation.h
+/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.h
+
 /Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.h
 iostream
 -
@@ -25,10 +29,4 @@ iostream
 -
 Node.h
 /Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/Node.h
-
-/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/main.cpp
-iostream
--
-ArithmeticEvaluation.h
-/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.h
 
