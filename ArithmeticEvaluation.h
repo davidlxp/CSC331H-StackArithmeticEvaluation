@@ -9,9 +9,11 @@
 #ifndef STACKARITHMETICEVALUATION_ARITHMETICEVALUATION_H
 #define STACKARITHMETICEVALUATION_ARITHMETICEVALUATION_H
 
-# include <iostream>
-#include <unordered_map>
-# include "Stack.cpp"
+#include <iostream>
+#include <map>
+#include <vector>
+#include <sstream>
+#include "Stack.cpp"
 using namespace std;
 
 class ArithmeticEvaluation {
@@ -26,10 +28,11 @@ public:
      * @Brief function for evaluating an arithmetic expression and provide
      * calculated result
      * @Detail when the function start to run, it will ask the user to
-     * provide an arithmetic expression. Then the function will print out the
-     * arithmetic calculation of the expression user provided
+     * provide an arithmetic expression. After successful calculation, it
+     * will save the result to the input variable user provided
+     * @Input a double variable which receive the calculated result
      */
-    double evaluation();
+    void evaluation(double& resultNum);
 
 private:
     Stack<double> numStack;                         // Stack to store numbers
@@ -40,7 +43,7 @@ private:
      * their corresponding precedence rank. higher number of precedence
      * rank means the operator has higher precedence
      */
-    unordered_map<char, int> precedenceMap;
+    map<char, int> precedenceMap;
 
     /**
      * @Brief getPrecedence returns the precedence of an operator (eg. '+')
@@ -70,6 +73,11 @@ private:
     void calculation();
 
     /**
+     * @Brief function to check if an input MATH operator is allow in this program
+     */
+    bool isMathOp(char op);
+
+    /**
      * @Brief function handle the situation where peek a white space
      * @Detail ignore the whitespace
      */
@@ -79,7 +87,12 @@ private:
      * @Brief function handle the situation where peek a number (int or decimal)
      * @Detail add the number to numStack
      */
-    void handleNumber(const double& num);
+    void handleNumber(double& num, bool& opFlag, bool& beginFlag);
+
+    /**
+     * @Brief function handle the situation where peek a non-digital, which is operator
+     */
+    void handleOperator(char& op, bool& opFlag, bool& beginFlag, bool& forbiddenOp);
 
     /**
      * @Brief function handle the case where "-" and "+" do not stands
@@ -104,11 +117,11 @@ private:
     void handleDecimalSymbol(const char& op);
 
     /**
-     * @Brief function handles the case where seeing a "(" symbol or any symbol when
-     * opStack is empty
-     * @Detail function will just push the new operator into the opStack
+     * @Brief function handles the case where seeing a "(" symbol
+     * @Detail function will read the operator '(' immediately
+     * and push it into the opStack
      */
-    void handleOpenParenOrOpStackEmpty(const char& op);
+    void handleOpenParen(const char& op);
 
     /**
      * @Brief function handles the case where seeing a ")" symbol
@@ -138,6 +151,13 @@ private:
      * in the opStack, which means there still are some calculations needed to be done
      */
     void calculateUntilEmpty();
+
+    /**
+     * @Brief the function pops all elements from numStack and opStack until they are empty.
+     * @Detail if the calculation process is terminated due to detected unknown operator, we need
+     * to clean up the opStack and numStack to be prepared for the next math expression evaluation.
+     */
+    void popUntilEmpty();
 
     /**
      * @Brief function returns calculation answer of user's input

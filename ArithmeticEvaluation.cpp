@@ -69,7 +69,15 @@ void ArithmeticEvaluation::calculation()
     numStack.push(calcResult); // push the calculated result back to the numStack
 }
 
-double ArithmeticEvaluation::evaluation()
+bool ArithmeticEvaluation::isMathOp(char op)
+{
+    bool judge = false;
+    if (precedenceMap.find(op) != precedenceMap.end())
+        judge = true;
+    return judge;
+}
+
+void ArithmeticEvaluation::evaluation(double& resultNum)
 {
     // Initialize useful variables
     double num = 0;                               // temp variable for storing number
@@ -77,80 +85,79 @@ double ArithmeticEvaluation::evaluation()
 
     bool opFlag = false;                          // flag shows the item read previously is an operator
     bool beginFlag = true;                        // flag shows it's the beginning of reading
+    bool forbiddenOp = false;                     // check if detected operators not allowed
 
-    // Start to take input and evaluate an mathematical expression
+    // Start to take input and evaluate a mathematical expression
     cout << "Please Provide Arithmetic Expression for Evaluation: ";
-
-    while (cin.peek() != '\n')
+    while (cin.peek() != '\n' && !forbiddenOp)
     {
-        // 1. skip the whitespace if any
-        if (cin.peek() == ' ')
-        {
-            handleWhiteSpace();                  // handle the whitespace from user input
-        }
-        // 2. if meet a number (int or decimal)
-        else if (isdigit(cin.peek()))
-        {
-            cin >> num;
-            handleNumber(num);                   // handle the number from user input
-
-            opFlag = false;                      // read a number, it's not operator, so opFlag turns to False
-            beginFlag = false;                   // once read something, it's not beginning of expression anymore
-        }
-        // 3. when seeing '-' or '+' operator, and they don't stand for Arithmetic operators
-        else if ((cin.peek() == '-' || cin.peek() == '+') && (beginFlag || (opFlag && op != ')')))
-        {
-            cin >> op;                          // read the operator '-' or '+'
-            handleSpecialMinusPlusSign(op);     // handle the special '-' or '+' sign
-
-            opFlag = true;                      // the last read is an operator '*', so opFlag turns to True
-            beginFlag = false;                  // once read something, it's not beginning of expression anymore
-        }
-        // 4. when see ".", handle it as a part of decimal number
-        else if (cin.peek() == '.')
-        {
-            cin >> op;                              // read the decimal so the input stream can move on
-            handleDecimalSymbol(op);                // handle decimal symbol
-
-            opFlag = true;                          // the last read is an operator '*', so opFlag turns to True
-            beginFlag = false;                      // once read something, it's not beginning of expression anymore
-        }
-        // 5. if meet operators under the other situation which are not stated above
-        else
-        {
-            cin >> op;                              // read the new operator
-
-            char opTop = '\0';                      // '\0' means the char is empty
-            opStack.Top(opTop);                  // try to get the top operator from stack
-
-            if (op == '(' || opTop == '\0')         // if op is '(' or if the opStack is empty
-                handleOpenParenOrOpStackEmpty(op);
-            else                                    // if op is not '(' and there are item in the opStack
-            {
-                if (op == ')')                      // a. if we read a ')' operator
-                    handleCloseParen();
-                else                                 // b. if we read anyone from '+-*/' operators
-                    handleMathOperator(op);
-            }
-
-            opFlag = true;                          // read an operator, turns opFlag to True
-            beginFlag = false;                      // once read something, it's not beginning of expression anymore
-        }
+        if (cin.peek() == ' ')                  // 1. skip the whitespace if any
+            handleWhiteSpace();
+        else if (isdigit(cin.peek()))           // 2. if meet a number (int or decimal)
+            handleNumber(num, opFlag, beginFlag);
+        else                                    // 3. if meet an operator
+            handleOperator(op, opFlag, beginFlag, forbiddenOp);
     }
 
-    calculateUntilEmpty();                          // deplete all operators to complete all undone calculations
-    return getAnswer();                             // return the calculation answer
+    // Validate the reason of getting out of the loop
+    if (forbiddenOp)                            // if process stop due to found forbidden operator
+    {
+        cout << "Please provide correct math expression!" << endl;        // callout error operator!
+        popUntilEmpty();                                                  // empty two stacks for next evaluation
+    }
+    else                                        // if process stop due to successfully reading all the contents
+    {
+        calculateUntilEmpty();                  // deplete all operators to complete all undone calculations
+        resultNum = getAnswer();                // return the calculation answer
+    }
 }
-
 
 void ArithmeticEvaluation::handleWhiteSpace()
 {
     cin.ignore();
 }
 
-void ArithmeticEvaluation::handleNumber(const double& num)
+void ArithmeticEvaluation::handleNumber(double& num, bool& opFlag, bool& beginFlag)
 {
+    cin >> num;
     numStack.push(num);
+
+    opFlag = false;                      // read a number, it's not operator, so opFlag turns to False
+    beginFlag = false;                   // once read something, it's not beginning of expression anymore
+}
+
+void ArithmeticEvaluation::handleOperator(char& op, bool& opFlag, bool& beginFlag, bool& forbiddenOp)
+{
+    // save value of "op" from last round, will used at the 1st control logic below
+    char preOp = op;
+
+    // read the new operator
+    cin >> op;
+
+    // 1. when seeing special '-' or '+' operator where they don't stand for Arithmetic operators
+    if ((op == '-' || op == '+') && (beginFlag || (opFlag && preOp != ')')))
+        handleSpecialMinusPlusSign(op);
+    // 2. handle normal math operators allowed in this program
+    else if (isMathOp(op))
+        handleMathOperator(op);
+    // 3. when see ".", handle it as a part of decimal number
+    else if (op == '.')
+        handleDecimalSymbol(op);
+    // 4. handle close parenthesis
+    else if (op == ')')
+        handleCloseParen();
+    // 5. handle open parenthesis
+    else if (op == '(')
+        handleOpenParen(op);
+    // 6. seeing an unknown operator
+    else
+    {
+        cout << "Invalid Operator detected: " << op << endl;
+        forbiddenOp = true;
+    }
+
+    opFlag = true;                       // read an operator, so opFlag turns to True
+    beginFlag = false;                   // once read something, it's not beginning of expression anymore
 }
 
 void ArithmeticEvaluation::handleSpecialMinusPlusSign(const char& op)
@@ -169,9 +176,9 @@ void ArithmeticEvaluation::handleDecimalSymbol(const char& op)
     opStack.push('*');                 // push '*' to the operator stack
 }
 
-void ArithmeticEvaluation::handleOpenParenOrOpStackEmpty(const char& op)
+void ArithmeticEvaluation::handleOpenParen(const char& op)
 {
-    opStack.push(op);                       // directly push the new op into opStack
+    opStack.push(op);                       // push the new op into opStack
 }
 
 void ArithmeticEvaluation::handleCloseParen()
@@ -212,6 +219,15 @@ void ArithmeticEvaluation::calculateUntilEmpty()
 {
     while (!opStack.isEmpty())
         calculation();
+}
+
+void ArithmeticEvaluation::popUntilEmpty()
+{
+    while (!opStack.isEmpty())
+        opStack.pop();
+
+    while (!numStack.isEmpty())
+        numStack.pop();
 }
 
 double ArithmeticEvaluation::getAnswer()

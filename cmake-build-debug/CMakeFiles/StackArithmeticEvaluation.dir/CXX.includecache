@@ -13,7 +13,11 @@ ArithmeticEvaluation.h
 /Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.h
 iostream
 -
-unordered_map
+map
+-
+vector
+-
+sstream
 -
 Stack.cpp
 /Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/Stack.cpp
@@ -29,4 +33,10 @@ iostream
 -
 Node.h
 /Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/Node.h
+
+/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/main.cpp
+iostream
+-
+ArithmeticEvaluation.h
+/Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.h
 
