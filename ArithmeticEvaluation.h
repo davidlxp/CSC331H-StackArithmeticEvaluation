@@ -25,14 +25,15 @@ public:
     ArithmeticEvaluation();
 
     /**
-     * @Brief function for evaluating an arithmetic expression and provide
+     * @Brief function for evaluating an mathematical expression and provide
      * calculated result
-     * @Detail when the function start to run, it will ask the user to
-     * provide an arithmetic expression. After successful calculation, it
-     * will save the result to the input variable user provided
-     * @Input a double variable which receive the calculated result
+     * @Detail when the function start to run, it will calculate the mathExpression
+     * user provided. After running, it will save the result to the input variable
+     * user provided
+     * @Input a string variable represent a mathematical expression,
+     * and a double variable which record the calculated result
      */
-    void evaluation(double& resultNum);
+    void evaluation(const string& mathExpression, double& resultNum);
 
 private:
     Stack<double> numStack;                         // Stack to store numbers
@@ -74,14 +75,11 @@ private:
 
     /**
      * @Brief function to check if an input MATH operator is allow in this program
+     * @Input the operator which we want to check if it's an MATH operator allowed
+     * in this program
+     * @Output a boolean indicates whether an operator which allow in this program
      */
     bool isMathOp(char op);
-
-    /**
-     * @Brief function handle the situation where peek a white space
-     * @Detail ignore the whitespace
-     */
-    void handleWhiteSpace();
 
     /**
      * @Brief function handle the situation where peek a number (int or decimal)
@@ -92,7 +90,7 @@ private:
     /**
      * @Brief function handle the situation where peek a non-digital, which is operator
      */
-    void handleOperator(char& op, bool& opFlag, bool& beginFlag, bool& forbiddenOp);
+    void handleOperator(char& op, char& preOp, bool& opFlag, bool& beginFlag, bool& forbiddenOp);
 
     /**
      * @Brief function handle the case where "-" and "+" do not stands
@@ -106,6 +104,12 @@ private:
      * which is not ')'. They also stand for negativity or positivity of number. In this case,
      * we turn the form like '3+ -  2' into '3+ (-1) * 2'.
      * --> in this step we put '1' or '-1' into numStack, and '*' into opStack
+     * @Input
+     * op: a reference to the current "op" variable
+     * preOp: a reference to the operator in the last round
+     * opFlag: a reference to a boolean flag which indicates whether last item is an operator
+     * beginFlag: a reference to a boolean flag which indicates whether it's beginning of input
+     * forbiddenOp: a reference to a boolean flag which is TRUE when meet unrecognized operator
      */
     void handleSpecialMinusPlusSign(const char& op);
 
@@ -113,6 +117,7 @@ private:
      * @Brief function handles the case where seeing a "." symbol
      * @Detail if ever read '.', it must be a part of a decimal number like '.6' = '0.6'
      * we change the form like '.6' to '0.1 * 6'
+     * @Input an operator read from string stream
      */
     void handleDecimalSymbol(const char& op);
 
@@ -120,6 +125,7 @@ private:
      * @Brief function handles the case where seeing a "(" symbol
      * @Detail function will read the operator '(' immediately
      * and push it into the opStack
+     * @Input an operator read from string stream
      */
     void handleOpenParen(const char& op);
 
@@ -141,6 +147,7 @@ private:
      * new operator no longer has less or equal precedence than the top
      * operator in the stack, or the top operator is '('. When all
      * calculation is finished, push the new operator into the opStack
+     * @Input an operator read from string stream
      */
     void handleMathOperator(const char& op);
 
@@ -163,6 +170,7 @@ private:
      * @Brief function returns calculation answer of user's input
      * @Detail after doing calculation until the opStack is empty. The only 1 number
      * remains in the numStack is the final calculation result of user input
+     * @Output the calculated answer of the math expression user provided
      */
     double getAnswer();
 

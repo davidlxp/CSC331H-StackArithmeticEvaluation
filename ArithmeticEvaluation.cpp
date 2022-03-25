@@ -77,26 +77,37 @@ bool ArithmeticEvaluation::isMathOp(char op)
     return judge;
 }
 
-void ArithmeticEvaluation::evaluation(double& resultNum)
+void ArithmeticEvaluation::evaluation(const string& mathExpression, double& resultNum)
 {
     // Initialize useful variables
-    double num = 0;                               // temp variable for storing number
-    char op = '\0';                               // temp variable for storing operator
+    double num = 0;                            // temp variable for storing number
+    char op = '\0';                            // temp variable for storing operator
 
-    bool opFlag = false;                          // flag shows the item read previously is an operator
-    bool beginFlag = true;                        // flag shows it's the beginning of reading
-    bool forbiddenOp = false;                     // check if detected operators not allowed
+    char preOp;                                // variable for recording op from last round
+
+    bool opFlag = false;                       // flag shows the item read previously is an operator
+    bool beginFlag = true;                     // flag shows it's the beginning of reading
+    bool forbiddenOp = false;                  // check if detected operators not allowed
+
+    stringstream ss;                           // "string stream" class turn string into input stream, like "cin"
+    ss.str(mathExpression);                    // convert a math expression to input stream
 
     // Start to take input and evaluate a mathematical expression
-    cout << "Please Provide Arithmetic Expression for Evaluation: ";
-    while (cin.peek() != '\n' && !forbiddenOp)
+    while (ss.peek() != EOF && !forbiddenOp)
     {
-        if (cin.peek() == ' ')                  // 1. skip the whitespace if any
-            handleWhiteSpace();
-        else if (isdigit(cin.peek()))           // 2. if meet a number (int or decimal)
+        if (ss.peek() == ' ')                  // 1. if meet white space
+            ss.ignore();
+        else if (isdigit(ss.peek()))           // 2. if meet a number (int or decimal)
+        {
+            ss >> num;
             handleNumber(num, opFlag, beginFlag);
-        else                                    // 3. if meet an operator
-            handleOperator(op, opFlag, beginFlag, forbiddenOp);
+        }
+        else                                   // 3. if meet an operator
+        {
+            preOp = op;                        // record op which from last round
+            ss >> op;                          // read current op
+            handleOperator(op, preOp, opFlag, beginFlag, forbiddenOp);
+        }
     }
 
     // Validate the reason of getting out of the loop
@@ -112,28 +123,16 @@ void ArithmeticEvaluation::evaluation(double& resultNum)
     }
 }
 
-void ArithmeticEvaluation::handleWhiteSpace()
-{
-    cin.ignore();
-}
-
 void ArithmeticEvaluation::handleNumber(double& num, bool& opFlag, bool& beginFlag)
 {
-    cin >> num;
     numStack.push(num);
 
-    opFlag = false;                      // read a number, it's not operator, so opFlag turns to False
-    beginFlag = false;                   // once read something, it's not beginning of expression anymore
+    opFlag = false;                    // read a number, it's not operator, so opFlag turns to False
+    beginFlag = false;                 // once read something, it's not beginning of expression anymore
 }
 
-void ArithmeticEvaluation::handleOperator(char& op, bool& opFlag, bool& beginFlag, bool& forbiddenOp)
+void ArithmeticEvaluation::handleOperator(char& op, char& preOp, bool& opFlag, bool& beginFlag, bool& forbiddenOp)
 {
-    // save value of "op" from last round, will used at the 1st control logic below
-    char preOp = op;
-
-    // read the new operator
-    cin >> op;
-
     // 1. when seeing special '-' or '+' operator where they don't stand for Arithmetic operators
     if ((op == '-' || op == '+') && (beginFlag || (opFlag && preOp != ')')))
         handleSpecialMinusPlusSign(op);
@@ -156,8 +155,8 @@ void ArithmeticEvaluation::handleOperator(char& op, bool& opFlag, bool& beginFla
         forbiddenOp = true;
     }
 
-    opFlag = true;                       // read an operator, so opFlag turns to True
-    beginFlag = false;                   // once read something, it's not beginning of expression anymore
+    opFlag = true;                     // read an operator, so opFlag turns to True
+    beginFlag = false;                 // once read something, it's not beginning of expression anymore
 }
 
 void ArithmeticEvaluation::handleSpecialMinusPlusSign(const char& op)
