@@ -70,7 +70,7 @@ int printMenu()
     cout << "\nMain Menu:" << endl;
     cout << "1. Evaluate a Mathematical Expression" << endl;
     cout << "2. Exit The Program" << endl;
-    cout << "Please make a selection by index: ";
+    cout << "Please select 1 or 2: ";
 
     string choiceStr;
     getline(cin, choiceStr);
@@ -84,9 +84,11 @@ void runProgram()
 
     cout << "\nWelcome to the Arithmetic Evaluator!";
     cout << "\nIf you provide me a mathematical expression, I could solve it for you." << endl;
+
     cout << "\nPlease follows the rules below when providing an mathematical expression:";
     cout << "\n=> Both integers and decimal numbers are allowed";
-    cout << "\n=> Only +, -, *, / operators are allowed" << endl;
+    cout << "\n=> Only +, -, *, / operators are allowed";
+    cout << "\n=> Incorrect expressions, like '**7+9', are not allowed" << endl;
 
     int choice = printMenu();
     while (choice != 2)
