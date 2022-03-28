@@ -1,6 +1,6 @@
 /*********************************************************************/
 /* Programmer: Xinpeng Liu                                           */
-/* Date: March 17, 2022                                               */
+/* Date: March 28, 2022                                               */
 /* Purpose: Definition of ArithmeticEvaluation class                 */
 /* ArithmeticEvaluation class uses Stacks to evaluate a mathematical */
 /* expression                                                        */
@@ -53,7 +53,7 @@ private:
      * @Input 'op' is the operator the user wants to check precedence for.
      * @Output the precedence rank of an operator
      */
-    int getPrecedence(char op1);
+    int getPrecedence(char op1) const;
 
     /**
      * @Brief compare the precedence of two 'char' variables, to see if the var on the
@@ -62,7 +62,7 @@ private:
      * @Output a boolean result. If RHS has less precedence than the RHS, the output is
      * TRUE. Otherwise, the output is FALSE
      */
-    bool isLessOrEqualPrecedence(char leftOp, char rightOp);
+    bool isLessOrEqualPrecedence(char leftOp, char rightOp) const;
 
     /**
      * @Brief do calculation using the top operator in the stack, and the top two
@@ -79,7 +79,7 @@ private:
      * in this program
      * @Output a boolean indicates whether an operator which allow in this program
      */
-    bool isMathOp(char op);
+    bool isMathOp(char op) const;
 
     /**
      * @Brief function handle the situation where peek a number (int or decimal)

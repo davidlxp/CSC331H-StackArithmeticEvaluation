@@ -1,6 +1,6 @@
 /*********************************************************************/
 /* Programmer: Xinpeng Liu                                           */
-/* Date: March 17, 2022                                               */
+/* Date: March 28, 2022                                               */
 /* Purpose: Implementation of ArithmeticEvaluation class             */
 /*********************************************************************/
 
@@ -15,7 +15,7 @@ ArithmeticEvaluation::ArithmeticEvaluation()
     precedenceMap.insert(pair<char,int>('/', 4));
 }
 
-int ArithmeticEvaluation::getPrecedence(char op1)
+int ArithmeticEvaluation::getPrecedence(char op1) const
 {
     int res = -1;
 
@@ -26,7 +26,7 @@ int ArithmeticEvaluation::getPrecedence(char op1)
     return res;
 }
 
-bool ArithmeticEvaluation::isLessOrEqualPrecedence(char leftOp, char rightOp)
+bool ArithmeticEvaluation::isLessOrEqualPrecedence(char leftOp, char rightOp) const
 {
     int leftPrecedence = getPrecedence(leftOp);
     int rightPrecedence = getPrecedence(rightOp);
@@ -69,7 +69,7 @@ void ArithmeticEvaluation::calculation()
     numStack.push(calcResult); // push the calculated result back to the numStack
 }
 
-bool ArithmeticEvaluation::isMathOp(char op)
+bool ArithmeticEvaluation::isMathOp(char op) const
 {
     bool judge = false;
     if (precedenceMap.find(op) != precedenceMap.end())
