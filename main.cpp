@@ -86,9 +86,9 @@ void runProgram()
     cout << "\nIf you provide me a mathematical expression, I could solve it for you." << endl;
 
     cout << "\nPlease follows the rules below when providing an mathematical expression:";
-    cout << "\n=> Both integers and decimal numbers are allowed";
-    cout << "\n=> Only +, -, *, / operators are allowed";
-    cout << "\n=> Incorrect expressions, like '**7+9', are not allowed" << endl;
+    cout << "\n> Both integers and decimal numbers are allowed";
+    cout << "\n> Only +, -, *, / operators are allowed";
+    cout << "\n> Incorrect expressions, like '**7+9', are not allowed" << endl;
 
     int choice = printMenu();
     while (choice != 2)
