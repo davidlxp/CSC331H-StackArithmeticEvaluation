@@ -33,6 +33,8 @@ Node.h
 /Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/main.cpp
 iostream
 -
+string
+-
 ArithmeticEvaluation.h
 /Users/xinpengliu/Desktop/Code/CSC331H/StackArithmeticEvaluation/ArithmeticEvaluation.h
 
